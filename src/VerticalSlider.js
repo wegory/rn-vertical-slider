@@ -130,12 +130,20 @@ export default class VerticalSlider extends Component<Props, State> {
     } else {
       ballPosition = ballPosition - ballHeight / 2;
     }
+    Animated.parallel([
       Animated.timing(this.state.sliderHeight, {
         toValue: sliderHeight,
         easing: Easing.linear,
         duration: animationDuration || 0,
         useNativeDriver: false
-      }).start()
+      }),
+      Animated.timing(this.state.ballHeight, {
+        toValue: ballPosition,
+        easing: Easing.linear,
+        duration: animationDuration || 0,
+        useNativeDriver: false
+      })
+    ]).start();
     this.setState({ value });
   }
 
